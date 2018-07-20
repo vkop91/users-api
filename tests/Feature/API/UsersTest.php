@@ -114,10 +114,10 @@ class UsersTest extends TestCase
         $response
             ->assertStatus(422)
             ->assertJson(["message" => "The given data was invalid."])
-            ->assertJsonFragment(["The first name field is required."])
-            ->assertJsonFragment(["The password field is required."])
-            ->assertJsonFragment(["The email must be a valid email address."])
-            ->assertJsonFragment(["The group id must be an integer."]);
+            ->assertJsonFragment([__('validation.required', ['attribute' => 'first name'])])
+            ->assertJsonFragment([__('validation.required', ['attribute' => 'password'])])
+            ->assertJsonFragment([__('validation.email', ['attribute' => 'email'])])
+            ->assertJsonFragment([__('validation.integer', ['attribute' => 'group id'])]);
     }
 
     /**
@@ -140,7 +140,7 @@ class UsersTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJson([
-                "message" => "User has been added.",
+                "message" => __('api.user.add'),
             ]);
         $this->assertDatabaseHas('users', [
             'first_name' => $user->first_name,
@@ -174,7 +174,7 @@ class UsersTest extends TestCase
         $response
             ->assertStatus(404)
             ->assertJson([
-                "message" => "User not founded.",
+                "message" => __('api.user.not_founded'),
             ]);
     }
 
@@ -213,10 +213,10 @@ class UsersTest extends TestCase
                 "message" => "The given data was invalid.",
             ])
             ->assertJsonFragment([
-                "The first name field must have a value.",
+                __('validation.filled', ['attribute' => 'first name']),
             ])
             ->assertJsonFragment([
-                "The email must be a valid email address.",
+                __('validation.email', ['attribute' => 'email']),
             ]);
     }
 
@@ -240,7 +240,7 @@ class UsersTest extends TestCase
         $response
             //->assertStatus(200)
             ->assertJson([
-                "message" => "User has been updated.",
+                "message" => __('api.user.update'),
             ]);
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
@@ -262,7 +262,7 @@ class UsersTest extends TestCase
         $response
             ->assertStatus(404)
             ->assertJson([
-                "message" => "User not founded.",
+                "message" => __('api.user.not_founded'),
             ]);
     }
 
@@ -277,7 +277,7 @@ class UsersTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJson([
-                "message" => "User has been deleted.",
+                "message" => __('api.user.delete'),
             ]);
         $this->assertNull(User::find($user->id));
     }

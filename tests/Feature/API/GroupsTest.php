@@ -54,7 +54,7 @@ class GroupsTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJson([
-                "message" => "Group has been added.",
+                "message" => __('api.group.add'),
             ]);
         $this->assertDatabaseHas('groups', [
             'name' => $group->name
@@ -85,7 +85,7 @@ class GroupsTest extends TestCase
         $response
             ->assertStatus(404)
             ->assertJson([
-                "message" => "Group not founded.",
+                "message" => __('api.group.not_founded'),
             ]);
     }
 
@@ -129,7 +129,7 @@ class GroupsTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJson([
-                "message" => "Group has been updated.",
+                "message" => __('api.group.update'),
             ]);
         $this->assertDatabaseHas('groups', [
             'id'   => $group->id,
@@ -148,7 +148,7 @@ class GroupsTest extends TestCase
         $response
             ->assertStatus(404)
             ->assertJson([
-                "message" => "Group not founded.",
+                "message" => __('api.group.not_founded'),
             ]);
     }
 
@@ -163,7 +163,7 @@ class GroupsTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJson([
-                "message" => "Group has been deleted.",
+                "message" => __('api.group.delete'),
             ]);
         $this->assertNull(Group::find($group->id));
     }
